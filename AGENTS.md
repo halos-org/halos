@@ -14,6 +14,7 @@
 - `docs/DEVELOPMENT_WORKFLOW.md` - Detailed Claude Code workflows
 - `docs/PROJECT_PLANNING_GUIDE.md` - Project planning process
 - `docs/HOSTNAME_POLICY.md` - Policy on hard-coded hostname references
+- `docs/solutions/` - Documented solutions to past problems (bugs, best practices, workflow patterns), with YAML frontmatter for searchability; relevant when implementing or debugging in documented areas
 
 ## ⛔ Test Device Policy
 
@@ -99,10 +100,10 @@ When configuring CI workflows, always use the correct `apt-repository` input for
 
 ```bash
 # Clone all component repositories
-./run repos:clone
+./run clone-repos
 
 # Update all repositories
-./run repos:pull-all-main
+./run pull-all-main
 
 # Build an image
 cd halos-pi-gen
@@ -120,10 +121,10 @@ cd halos-pi-gen
 
 ```bash
 # Update all repositories to latest main/halos branches
-./run repos:pull-all-main
+./run pull-all-main
 
 # Check status of all repositories
-./run repos:status
+./run show-status
 
 # Work in a specific repository
 cd halos-pi-gen
