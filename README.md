@@ -275,13 +275,13 @@ Each repository is independently managed. The `./run` script provides convenienc
 
 ```bash
 # Clone all component repositories
-./run repos:clone
+./run clone-repos
 
 # Update all repositories to latest
-./run repos:pull-all-main
+./run pull-all-main
 
 # Check status of all repositories
-./run repos:status
+./run show-status
 
 # Build an image (requires Docker)
 cd halos-pi-gen
