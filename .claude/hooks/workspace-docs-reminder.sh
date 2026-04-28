@@ -3,8 +3,9 @@
 # Fires only for files at <workspace-root>/docs/...; skips sub-repo docs/.
 # Non-blocking: always exits 0. Errors are silenced so a misbehaving hook
 # never fails an agent's tool call.
+#
+# Requires: jq (silently no-ops if missing — install via `./run install-dev-deps`).
 
-set +e
 exec 2>/dev/null
 
 input=$(cat)
@@ -14,8 +15,10 @@ file_path=$(printf '%s' "$input" | jq -r '.tool_input.file_path // .tool_input.p
 [ -z "$file_path" ] && exit 0
 
 # Workspace root = two directories up from this script's location.
-script_dir=$(cd "$(dirname "$0")" && pwd) || exit 0
-workspace_root=$(cd "$script_dir/../.." && pwd) || exit 0
+# Use `pwd -P` so a workspace cloned at a symlinked path matches the physical
+# path the tool reports in file_path.
+script_dir=$(cd "$(dirname "$0")" && pwd -P) || exit 0
+workspace_root=$(cd "$script_dir/../.." && pwd -P) || exit 0
 
 case "$file_path" in
   /*) abs_path=$file_path ;;
