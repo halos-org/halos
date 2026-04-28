@@ -1,4 +1,5 @@
 CLAUDE.local.md
+.claude/settings.local.json
 
 # Sub-repositories (managed by ./run script)
 halos-pi-gen/
