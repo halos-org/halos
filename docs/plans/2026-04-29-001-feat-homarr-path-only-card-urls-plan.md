@@ -223,7 +223,7 @@ self_hostnames =
 
 ## Implementation Units
 
-- [ ] **Unit 0: Homarr fork docker image build & deployment wiring**
+- [x] **Unit 0: Homarr fork docker image build & deployment wiring** (completed 2026-04-30; published `ghcr.io/hatlabs/homarr:v1.59.3-halos.{1,2,3}`)
 
 **Goal:** Establish the build path that turns a `hatlabs/homarr` branch commit into a deployable container image consumed by `halos-core-containers`. Without this, Phase 1 has no executable path — the patched fork has nowhere to land. Currently, `halos-core-containers/docker-compose.yml:105` references `ghcr.io/homarr-labs/homarr:v1.59.3` directly from upstream; there is no fork-built image and no consumption pipeline for one.
 
@@ -258,7 +258,7 @@ Test expectation: none — pure infrastructure plumbing. Verification is end-to-
 
 ---
 
-- [ ] **Unit 1: Homarr fork — schema relaxation, server-side resolver, bookmarks widget update, audit**
+- [x] **Unit 1: Homarr fork — schema relaxation, server-side resolver, bookmarks widget update, audit** (completed 2026-04-30; PR `hatlabs/homarr#1`)
 
 **Goal:** Land the `hatlabs/homarr` fork patch that accepts path-only hrefs, makes the `pingUrl ?? href` fallback request-aware, updates the bookmarks widget to render the path for path-only entries, and audits all other `app.href` consumers for path-only safety.
 
