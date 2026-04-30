@@ -314,7 +314,7 @@ Test expectation: none — pure infrastructure plumbing. Verification is end-to-
 
 ---
 
-- [ ] **Unit 2: Adapter — accept path-only registry URLs**
+- [x] **Unit 2: Adapter — accept path-only registry URLs** (completed 2026-04-30; `homarr-container-adapter` branch `feat/path-only-card-urls`, version 0.4.6)
 
 **Goal:** Adapter loads webapps.d files containing `url = "/cockpit/"` without rejecting them.
 
@@ -353,7 +353,7 @@ Test expectation: none — pure infrastructure plumbing. Verification is end-to-
 
 ---
 
-- [ ] **Unit 3: Adapter — `derive_ping_url` builds internal URL for path-only entries**
+- [x] **Unit 3: Adapter — `derive_ping_url` builds internal URL for path-only entries** (completed 2026-04-30; same commit as Unit 2)
 
 **Goal:** `derive_ping_url` produces a usable internal URL when `app.url` is path-only, by building `https://host.docker.internal<path>` directly from the path.
 
@@ -389,7 +389,7 @@ Test expectation: none — pure infrastructure plumbing. Verification is end-to-
 
 ---
 
-- [ ] **Unit 4: Adapter — Signal K dynamic discovery emits path-only URLs**
+- [x] **Unit 4: Adapter — Signal K dynamic discovery emits path-only URLs** (completed 2026-04-30; same commit as Unit 2)
 
 **Goal:** Signal K webapp discovery generates `app.url = "/signalk-server/<package>/"` instead of `"https://<domain>/signalk-server/<package>/"`.
 
@@ -420,7 +420,7 @@ Test expectation: none — pure infrastructure plumbing. Verification is end-to-
 
 ---
 
-- [ ] **Unit 5: `halos-cockpit-config` — update `cockpit.toml` to path-only**
+- [x] **Unit 5: `halos-cockpit-config` — update `cockpit.toml` to path-only** (completed 2026-04-30; branch `feat/path-only-cockpit-url`, version 0.5.7; `Depends: homarr-container-adapter (>= 0.4.6)`)
 
 **Goal:** Ship the path-only registry entry for Cockpit.
 
