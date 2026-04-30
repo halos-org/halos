@@ -420,7 +420,7 @@ Test expectation: none — pure infrastructure plumbing. Verification is end-to-
 
 ---
 
-- [x] **Unit 5: `halos-cockpit-config` — update `cockpit.toml` to path-only** (completed 2026-04-30; branch `feat/path-only-cockpit-url`, version 0.5.9; **no `Depends:` pin** — see decision note below)
+- [x] **Unit 5: `halos-cockpit-config` — update `cockpit.toml` to path-only** (completed 2026-04-30; branch `feat/path-only-cockpit-url`, version 0.5.7; **no `Depends:` pin** — see decision note below)
 
 **Goal:** Ship the path-only registry entry for Cockpit.
 
