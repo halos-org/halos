@@ -115,6 +115,8 @@ The PR description carries the version requirement (`requires homarr-container-a
 
 ## Related
 
+- [`2026-05-13-prefer-breaks-over-depends-for-partial-upgrade-gating.md`](2026-05-13-prefer-breaks-over-depends-for-partial-upgrade-gating.md) — companion guidance: when this doc's Keep-the-pin conditions fire (silent failure mode OR manual partial upgrades are an expected operational pattern), reach for `Breaks: peer (<< X)` rather than `Depends: peer (>= X)`. PR halos-org/container-packaging-tools#203 is the worked example.
+- [`2026-05-13-shared-predicate-over-parallel-if-chains.md`](2026-05-13-shared-predicate-over-parallel-if-chains.md) — when a code generator auto-injects `Breaks:` lines (as CPT does for routed visible apps), the injection trigger must share its predicate with the contract-affected output trigger. Same review surfaced the drift.
 - `docs/plans/2026-04-29-001-feat-homarr-path-only-card-urls-plan.md` — the multi-PR plan whose implementation surfaced this question; Unit 5 covers the `cockpit.toml` change, and Unit 6 (the adapter migration with version probe) is the runtime-probe layer.
 - Workspace `AGENTS.md`, "APT Package Publishing Pipeline" section in MEMORY.md / "GitHub Organizations and APT Repositories" — describes the cohort-upgrade contract for `halos-org/apt.halos.fi` and `hatlabs/apt.hatlabs.fi`, which underwrites layer 1 of the test.
 - PR halos-org/halos-cockpit-config#30 — the concrete case where the pin was added per plan, then dropped after re-analysis.
