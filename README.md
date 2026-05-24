@@ -263,7 +263,6 @@ This repository acts as a workspace manager for all the components that make up 
 - **halos-homarr-branding/** - Homarr HaLOS branding package
 - **halos-imported-containers/** - Auto-imported apps from CasaOS, Runtipi, etc.
 - **halos-marine-containers/** - Marine app definitions and store configuration
-- **halos-mdns-publisher/** - mDNS hostname publisher daemon
 - **halos-metapackages/** - Halos and Halos-Marine metapackages
 - **homarr-container-adapter/** - Homarr first-boot setup and container discovery
 - **opencpn-docker/** - OpenCPN Docker image
