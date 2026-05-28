@@ -15,6 +15,7 @@
 - `docs/PROJECT_PLANNING_GUIDE.md` - Project planning process
 - `docs/HOSTNAME_POLICY.md` - Policy on hard-coded hostname references
 - `docs/solutions/` - Documented solutions to past problems (bugs, best practices, workflow patterns), with YAML frontmatter for searchability; relevant when implementing or debugging in documented areas
+- `docs/runbooks/` - Step-by-step operational procedures for recurring multi-repo workflows (e.g., rebasing the Homarr fork onto a new upstream release and promoting it to production); relevant when executing a documented procedure rather than designing a new one
 
 ## ⛔ Test Device Policy
 
