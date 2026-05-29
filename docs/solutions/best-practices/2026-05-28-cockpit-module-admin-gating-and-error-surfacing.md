@@ -152,6 +152,59 @@ When bootstrapping a new HaLOS Cockpit module — or when reviewing an existing 
 
 If any of these fail, you'll likely meet the "button does nothing visible" symptom in production.
 
+## Implementation conventions (added 2026-05-30)
+
+Two conventions that emerged from porting the pilot pattern to additional modules. Per-module specifics live in each module's own docs/; this section captures the cross-module rules.
+
+### Canonical `AdminGatedButton` shape — spread PatternFly `ButtonProps`
+
+Hand-enumerating Button props per module leads to drift (one consumer needs `size`, another adds `iconPosition`, the lists diverge). Spread `ButtonProps` so the wrapper exposes the full PatternFly Button surface without per-module shopping:
+
+```tsx
+import { Button, Tooltip } from "@patternfly/react-core";
+import type { ButtonProps } from "@patternfly/react-core";
+
+export const ADMIN_REQUIRED_TOOLTIP = "Administrative access required";
+
+export interface AdminGatedButtonProps extends ButtonProps {
+  isAdminRequired: boolean;
+}
+
+export function AdminGatedButton({
+  isAdminRequired,
+  isAriaDisabled,
+  isDisabled,
+  children,
+  ...rest
+}: AdminGatedButtonProps) {
+  const button = (
+    <Button {...rest} isAriaDisabled={isAdminRequired || isAriaDisabled || isDisabled}>
+      {children}
+    </Button>
+  );
+  if (isAdminRequired) {
+    return <Tooltip content={ADMIN_REQUIRED_TOOLTIP}>{button}</Tooltip>;
+  }
+  return button;
+}
+```
+
+Two semantic decisions baked in:
+
+- **Every disable reason collapses to `isAriaDisabled`** on the underlying `Button` so click suppression composes with the admin tooltip and the consumer never has to think about "operational disable vs aria disable".
+- **`isAdminRequired` is the only new prop.** Everything else flows through, so PatternFly Button changes don't break this component.
+
+(In JSX modules without TypeScript, drop the type extension and use the same `...props` spread shape directly.)
+
+### "Gated everywhere or nowhere" — enumerate every admin-required UI surface in the module
+
+Drive-by gating — fixing only the buttons an audit listed and missing others — leaves a worse UX than no gating at all, because the user can't tell which clickable controls are gated and which aren't. **Before opening a gating PR, enumerate every admin-required UI surface in the module.** Two cheap checks:
+
+1. Grep the module for `superuser: ['"]require['"]` and `superuser: ['"]try['"]` and confirm every callsite traces back to a gated UI element. The workspace `./run audit-admin-required` task does this across all Cockpit modules.
+2. Walk the rendered UI in Limited Access mode and confirm there are no clickable admin-required controls left.
+
+If any element fails check 1 *or* check 2, the gating PR isn't complete. Track the gap as a separate issue if you can't fix it in scope.
+
 ## Anti-patterns to recognize
 
 - `cockpit.spawn(..., { superuser: 'require' })` invoked from a button that has no permission check above it. If the user is in Limited Access mode the spawn fails before reaching the backend.
@@ -167,5 +220,6 @@ If any of these fail, you'll likely meet the "button does nothing visible" sympt
 - `cockpit-container-apps/frontend/src/hooks/useAdminPermission.ts` — the hook
 - `cockpit-container-apps/frontend/src/api/index.ts` — `runStreamingCommand`, `extractJsonObjects`, `buildSpawnFailureError`
 - `cockpit-container-apps/frontend/src/components/AppDetails.tsx` — `AdminGatedButton`, `runAction`, `isMountedRef`
+- `./run audit-admin-required` — workspace grep helper for the "gated everywhere" check
 - Cockpit upstream docs on `cockpit.permission()` — https://cockpit-project.org/guide/latest/cockpit-permission
 - Cockpit upstream docs on `cockpit.spawn()` — https://cockpit-project.org/guide/latest/cockpit-spawn
