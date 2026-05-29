@@ -57,7 +57,17 @@ This workspace manages multiple independent repositories. While each repository 
 
 **Changelog Policy**: Never edit `debian/changelog` files directly. Always use `./run bumpversion` which uses the `dch` tool for proper RFC 2822 date formatting. Direct edits cause weekday/date mismatches that break Debian tools. See individual repository AGENTS.md for details.
 
-**Version Bumps**: VERSION bumps are *per release cycle*, not per PR. Default: do NOT bump `VERSION` in feature PRs — CI auto-increments the `+N` revision in release tags (e.g., `v0.3.2+1`, `+2`, `+3`) between stable releases. Bump `VERSION` only when starting a new release cycle, i.e., when `VERSION` currently matches the latest stable tag and this PR is opening the next cycle. If `VERSION` already differs from the latest stable tag (a prior PR opened the cycle), no further bump is needed regardless of how many package-affecting files this PR touches. App-level versions in `apps/*/metadata.yaml` (container repos) bump per PR independently. CI enforces both rules conditionally — see `shared-workflows/.github/workflows/version-bump-check.yml`. Docs, tests, CI config, and dev tooling changes are excluded from the repo-level check.
+**Version Bumps**: The goal is that every build producing a `.deb` gets a strictly increasing version, valid under both semver and Debian version ordering. The increment lands at one of two levels: the `+N` build revision auto-increments on each merge (e.g. `v0.3.2+1`, `+2`, `+3`), or you bump a version element by hand when opening a release cycle. The hand bump is rare — default to not bumping.
+
+Decision procedure for a feature PR:
+
+1. **App metadata** (container repos with `apps/`): if you changed non-metadata files under `apps/<name>/`, bump the `version` field in that app's `metadata.yaml`. Per PR, per app, independent of everything below.
+2. **Repo `VERSION`** (per release cycle, not per PR):
+   - Find the latest stable release with `gh release list --exclude-drafts --exclude-pre-releases`. Stable tags look like `v0.3.2+4`; strip `+N` for the upstream version. Use the GitHub API, not `git tag` — draft releases leave tags that are not stable releases.
+   - If `VERSION` already differs from that upstream version, a prior PR opened the cycle. Do **not** bump, regardless of how many package files this PR touches; CI walks `+N` on merge.
+   - If `VERSION` equals it **and** this PR changes package-affecting files, this PR opens the next cycle: bump once with `./run bumpversion patch|minor|major`.
+
+"Package-affecting" means any file that ends up in a `.deb` — everything except docs, tests, CI config, and dev tooling. The exact set is non-obvious (root `docker-compose.yml` is payload for container repos and counts; `run`, `Makefile`, `tools/`, `store/`, `docker/`, and lockfiles do not), so treat `shared-workflows/.github/workflows/version-bump-check.yml` as the source of truth. Per-repo changelog schemes differ (committed vs CI-generated `debian/changelog`); see each repo's AGENTS.md.
 
 ## Structure
 
