@@ -195,6 +195,64 @@ function run-hooks {
 }
 
 ################################################################################
+# Auditing Commands
+
+function audit-admin-required {
+  #@ List every cockpit.spawn callsite using superuser:'require' or 'try' across Cockpit modules
+  #@ Category: Auditing
+  echo "🔍 Scanning for admin-required spawn callsites..."
+  echo ""
+
+  local total=0
+  shopt -s nullglob
+
+  for dir in cockpit-* cockpit; do
+    [ -d "$dir" ] || continue
+
+    # For the cockpit fork, restrict to the HaLOS-owned WiFi surface;
+    # the rest of the fork is upstream code we don't gate.
+    local scan_path="$dir"
+    if [ "$dir" = "cockpit" ]; then
+      scan_path="$dir/pkg/networkmanager"
+      [ -d "$scan_path" ] || continue
+    fi
+
+    local matches
+    matches=$(grep -rnE "superuser:[[:space:]]*['\"](require|try)['\"]" "$scan_path" \
+      --include="*.ts" --include="*.tsx" --include="*.js" --include="*.jsx" \
+      --exclude-dir=node_modules \
+      --exclude-dir=dist \
+      --exclude-dir=debian \
+      --exclude-dir=cockpit-src \
+      --exclude-dir=manual-build \
+      --exclude-dir=qunit \
+      --exclude-dir=__tests__ \
+      --exclude-dir=tests \
+      --exclude-dir=.git \
+      2>/dev/null || true)
+
+    if [ -n "$matches" ]; then
+      local count
+      count=$(printf '%s\n' "$matches" | wc -l | tr -d ' ')
+      local label="callsite"
+      [ "$count" -ne 1 ] && label="callsites"
+      echo "▸ $dir ($count $label)"
+      printf '%s\n' "$matches" | sed 's|^|  |'
+      echo ""
+      total=$((total + count))
+    fi
+  done
+
+  shopt -u nullglob
+
+  echo "Total: $total admin-required callsites"
+  echo ""
+  echo "For each callsite, confirm the triggering UI element is gated via"
+  echo "cockpit.permission({ admin: true }). See"
+  echo "docs/solutions/best-practices/2026-05-28-cockpit-module-admin-gating-and-error-surfacing.md"
+}
+
+################################################################################
 # Help System
 
 function help {
