@@ -69,6 +69,10 @@ Decision procedure for a feature PR:
 
 "Package-affecting" means any file that ends up in a `.deb` — everything except docs, tests, CI config, and dev tooling. The exact set is non-obvious (root `docker-compose.yml` is payload for container repos and counts; `run`, `Makefile`, `tools/`, `store/`, `docker/`, and lockfiles do not), so treat `shared-workflows/.github/workflows/version-bump-check.yml` as the source of truth. Per-repo changelog schemes differ (committed vs CI-generated `debian/changelog`); see each repo's AGENTS.md.
 
+## Worktree Location
+
+Git worktrees live in a hidden `.worktrees/` directory **inside the clone they belong to**, at `<repo>/.worktrees/<branch>` — keeping each worktree co-located with its own repo. Never create them as siblings inside this workspace (e.g. a `skip-203/` next to `skip/`): this workspace root is itself a git repo, so a sibling shows up as untracked clutter in its `git status`, belongs to no repo in anyone's mental model, and rots unnoticed. Keep `.worktrees/` gitignored so it never clutters the owning repo's status either. Use the `git-worktree` skill, which defaults to this location; don't hand-run `git worktree add ../<name>`. The Agent tool's transient `<repo>/.claude/worktrees/agent-*` worktrees follow the same in-clone pattern and self-clean.
+
 ## Structure
 
 ```
