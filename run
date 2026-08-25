@@ -51,20 +51,20 @@ function clone-repos {
   #@ Clone any missing repositories
   #@ Category: Repository Management
   echo "🔄 Checking repositories..."
-
   local cloned=0
   local skipped=0
 
   for repo in "${!REPOS[@]}"; do
     if [ -d "$repo" ]; then
       echo "⏭️  $repo (already exists)"
-      ((skipped++))
+      ((++skipped))
+
     else
       read -r url branch <<< "${REPOS[$repo]}"
       echo "📥 Cloning $repo (branch: $branch)..."
       if git clone -b "$branch" "$url" "$repo"; then
         echo "✅ $repo cloned successfully"
-        ((cloned++))
+        ((++cloned))
       else
         echo "❌ Failed to clone $repo"
         return 1
@@ -88,7 +88,7 @@ function pull-all-main {
   for repo in "${!REPOS[@]}"; do
     if [ ! -d "$repo" ]; then
       echo "⚠️  $repo (missing - run 'clone-repos' first)"
-      ((missing++))
+      ((++missing))
       continue
     fi
 
@@ -97,10 +97,10 @@ function pull-all-main {
 
     if (cd "$repo" && git pull origin "$branch"); then
       echo "✅ $repo updated successfully"
-      ((updated++))
+      ((++updated))
     else
       echo "❌ Failed to update $repo"
-      ((failed++))
+      ((++failed))
     fi
   done
 
