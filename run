@@ -35,7 +35,7 @@ declare -A REPOS=(
   ["apt.hatlabs.fi"]="git@github.com:hatlabs/apt.hatlabs.fi.git main"
   ["authelia"]="https://github.com/authelia/authelia.git master"
   ["avnav"]="https://github.com/wellenvogel/avnav.git master"
-  ["cockpit"]="git@github.com:halos-org/cockpit.git main"
+  ["cockpit"]="git@github.com:halos-org/cockpit.git wifi"
   ["cockpit-apt"]="git@github.com:halos-org/cockpit-apt.git main"
   ["cockpit-authelia-users"]="git@github.com:halos-org/cockpit-authelia-users.git main"
   ["cockpit-container-apps"]="git@github.com:halos-org/cockpit-container-apps.git main"
@@ -103,7 +103,7 @@ function clone-repos {
 }
 
 function pull-all-main {
-  #@ Pull latest changes from main branches for all repos
+  #@ Fast-forward each repository's default branch from origin
   #@ Category: Repository Management
   echo "🔄 Updating all repositories..."
 
@@ -121,7 +121,12 @@ function pull-all-main {
     read -r url branch <<< "${REPOS[$repo]}"
     echo "📥 Updating $repo (branch: $branch)..."
 
-    if (cd "$repo" && git pull origin "$branch"); then
+    # Fast-forward only the default branch; a checked-out feature branch is left untouched.
+    local update_cmd=(fetch origin "$branch:$branch")
+    if [ "$(git -C "$repo" branch --show-current)" = "$branch" ]; then
+      update_cmd=(pull --ff-only origin "$branch")
+    fi
+    if git -C "$repo" "${update_cmd[@]}"; then
       echo "✅ $repo updated successfully"
       ((++updated))
     else
