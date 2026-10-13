@@ -1,6 +1,6 @@
 # HaLOS Workspace - Agentic Coding Hub
 
-**LAST MODIFIED**: 2026-02-16
+**LAST MODIFIED**: 2026-10-13
 
 **Document Purpose**: Central workspace for agentic coding with Claude Code and other AI assistants. This workspace provides full context across all HaLOS repositories for optimal AI-assisted development.
 
@@ -71,40 +71,60 @@ Decision procedure for a feature PR:
 
 ## Worktree Location
 
-Git worktrees live in a hidden `.worktrees/` directory **inside the clone they belong to**, at `<repo>/.worktrees/<branch>` — keeping each worktree co-located with its own repo. Never create them as siblings inside this workspace (e.g. a `skip-203/` next to `skip/`): this workspace root is itself a git repo, so a sibling shows up as untracked clutter in its `git status`, belongs to no repo in anyone's mental model, and rots unnoticed. Keep `.worktrees/` gitignored so it never clutters the owning repo's status either. Use the `git-worktree` skill, which defaults to this location; don't hand-run `git worktree add ../<name>`. The Agent tool's transient `<repo>/.claude/worktrees/agent-*` worktrees follow the same in-clone pattern and self-clean.
+Git worktrees live in a hidden `.worktrees/` directory **inside the clone they belong to**, at `<repo>/.worktrees/<branch>` — keeping each worktree co-located with its own repo. Never create them as siblings inside this workspace (e.g. a `cockpit-apt-203/` next to `cockpit-apt/`): this workspace root is itself a git repo, so a sibling shows up as untracked clutter in its `git status`, belongs to no repo in anyone's mental model, and rots unnoticed. Keep `.worktrees/` gitignored so it never clutters the owning repo's status either. Use the `git-worktree` skill, which defaults to this location; don't hand-run `git worktree add ../<name>`. The Agent tool's transient `<repo>/.claude/worktrees/agent-*` worktrees follow the same in-clone pattern and self-clean.
 
 ## Structure
 
 ```
 halos/
+├── brand/                         # HaLOS and Hat Labs logo sources
 ├── halos-pi-gen/                  # Image builder
-├── apt.hatlabs.fi/                # Custom APT repo
+├── halos-pi-gen-custom/           # Custom HaLOS builds with pre-installed plugins
+├── halos-pi-gen-template/         # Template for layering custom stages on halos-pi-gen
+├── pi-gen/                        # Raspberry Pi OS image tool (fork)
+├── flash-live-system/             # Flash an SBC over the network while it runs
+├── apt.halos.fi/                  # HaLOS APT repo
+├── apt.hatlabs.fi/                # Hat Labs APT repo
+├── cockpit/                       # Cockpit (fork)
 ├── cockpit-apt/                   # Cockpit APT package manager
 ├── cockpit-authelia-users/        # Authelia user management for Cockpit
 ├── cockpit-container-apps/        # Container app management UI
 ├── cockpit-dockermanager-debian/  # Docker manager Cockpit plugin
 ├── cockpit-networkmanager-halos/  # Cockpit NetworkManager with WiFi features
 ├── container-packaging-tools/     # Container package generator
+├── halos-bridge-metapackage/      # Migration from apt.hatlabs.fi to apt.halos.fi
+├── halos-browser-trust/           # Make Chromium and Firefox trust the system CA store
 ├── halos-cockpit-config/          # Cockpit HaLOS config and branding
 ├── halos-core-containers/         # Core app definitions (Homarr, Traefik, Authelia)
+├── halos-desktop-branding/        # Branding and wallpaper for desktop variants
+├── halos-halpi-desktop-branding/  # HALPI2 branding for desktop variants
+├── halos-halpi2-desktop/          # HALPI2 desktop variant metapackage
 ├── halos-homarr-branding/         # Homarr HaLOS branding package
 ├── halos-imported-containers/     # Auto-imported apps from CasaOS, Runtipi, etc.
 ├── halos-marine-containers/       # Marine app definitions + store
+├── halos-mdns-publisher/          # Advertises *.halos.local subdomains via Avahi
 ├── halos-metapackages/            # HaLOS metapackages (halos, halos-marine)
+├── halos-ublox-config/            # u-blox GNSS receiver auto-configuration
+├── homarr/                        # Homarr (upstream clone)
 ├── homarr-container-adapter/      # Homarr first-boot setup and container discovery
+├── authelia/                      # Authelia (upstream clone, reference)
+├── avnav/                         # AvNav (upstream clone, reference)
 ├── opencpn-docker/                # OpenCPN Docker image
-├── signalk-halpi/                 # Signal K plugin for HALPI2 monitoring (hatlabs org)
+├── signalk-server-docker/         # Signal K server image with the marine plugin set
+├── docs.halos.fi/                 # docs.halos.fi site
+├── docs-tools/                    # Documentation checkers for the MkDocs sites
+├── halos.fi/                      # HaLOS landing page
 └── shared-workflows/              # Reusable GitHub Actions workflows
 ```
 
-**Each repository has its own AGENTS.md** - read the appropriate one for detailed context.
+Signal K webapps and plugins (Skip, KIP, the alert and history provider plugins) and the Signal K server fork are developed in a separate workspace, `hatlabs/signalk-workspace`.
 
 ## GitHub Organizations and APT Repositories
 
 Repositories are split across two GitHub orgs:
 
 - **`halos-org`** — Most HaLOS repos. APT packages deploy to `halos-org/apt.halos.fi`.
-- **`hatlabs`** — Hardware-specific repos (`signalk-halpi`), upstream forks (`homarr`, `signalk-server`, `signalk-alert-manager`), and `apt.hatlabs.fi`. APT packages deploy to `hatlabs/apt.hatlabs.fi`.
+- **`hatlabs`** — Hardware-specific repos (`halos-pi-gen-custom`, `halos-halpi-desktop-branding`) and `apt.hatlabs.fi`. APT packages deploy to `hatlabs/apt.hatlabs.fi`.
 
 When configuring CI workflows, always use the correct `apt-repository` input for the shared workflows. Repos in `hatlabs` must explicitly set `apt-repository: hatlabs/apt.hatlabs.fi` (the default is `halos-org/apt.halos.fi`).
 
