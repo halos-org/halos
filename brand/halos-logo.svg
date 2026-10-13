@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="100%"
+   height="100%"
+   viewBox="39 39 770 770"
+   version="1.1"
+   xml:space="preserve"
+   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:1.5;"
+   id="svg10"
+   sodipodi:docname="halos-logo.svg"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+   id="namedview10"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="0.91993023"
+   inkscape:cx="241.32265"
+   inkscape:cy="347.30895"
+   inkscape:window-width="1800"
+   inkscape:window-height="1102"
+   inkscape:window-x="0"
+   inkscape:window-y="39"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg10" />
+    <defs
+   id="defs3">
+        <filter
+   id="circle-glow"
+   filterUnits="objectBoundingBox"
+   x="-0.033103448"
+   y="-0.033103448"
+   width="1.0662069"
+   height="1.0662069">
+            <feGaussianBlur
+   in="SourceGraphic"
+   stdDeviation="8"
+   id="feGaussianBlur1" />
+        </filter>
+        <filter
+   id="edge-glow"
+   filterUnits="objectBoundingBox"
+   x="-0.091615022"
+   y="-0.1167439"
+   width="1.18323"
+   height="1.2334878">
+            <feFlood
+   flood-color="white"
+   flood-opacity="1"
+   result="white"
+   id="feFlood1" />
+            <feComposite
+   in="white"
+   in2="SourceAlpha"
+   operator="in"
+   result="whiteShape"
+   id="feComposite1" />
+            <feGaussianBlur
+   in="whiteShape"
+   stdDeviation="8"
+   result="glow1"
+   id="feGaussianBlur2" />
+            <feComposite
+   in="glow1"
+   in2="glow1"
+   operator="arithmetic"
+   k1="0"
+   k2="2"
+   k3="0"
+   k4="0"
+   result="glow"
+   id="feComposite2" />
+            <feMerge
+   id="feMerge3">
+                <feMergeNode
+   in="glow"
+   id="feMergeNode2" />
+                <feMergeNode
+   in="SourceGraphic"
+   id="feMergeNode3" />
+            </feMerge>
+        </filter>
+    </defs>
+    <g
+   transform="matrix(1.0650289,0,0,1.0650289,-141.13069,-141.13137)"
+   id="g10">
+        <g
+   id="Pictogram"
+   transform="matrix(3.76031,0,0,3.77707,-2628.74,-259.928)">
+            <g
+   id="g8">
+                <g
+   transform="matrix(0.320956,0,0,0.319533,669.912,39.7856)"
+   filter="url(#circle-glow)"
+   id="g3">
+                    <circle
+   cx="530"
+   cy="530"
+   r="290"
+   style="fill:#ffffff"
+   id="circle3" />
+                </g>
+                <g
+   transform="matrix(0.265935,0,0,0.264756,699.073,68.8175)"
+   id="g4">
+                    <path
+   d="M 529.571,464.881 269.629,395.23 V 664.881 L 530,734.766 Z"
+   style="fill:#adb4c0;stroke:#bdba59;stroke-width:1.33px"
+   id="path3" />
+                </g>
+                <g
+   transform="matrix(-0.265935,0,0,0.264756,980.915,68.8793)"
+   id="g5">
+                    <path
+   d="M 529.571,464.881 269.629,395.23 V 664.881 L 530,734.766 Z"
+   style="fill:#57667f;stroke:#bdba59;stroke-width:1.33px"
+   id="path4" />
+                </g>
+                <g
+   transform="matrix(0.209823,0,0,0.208893,728.861,98.4949)"
+   id="g6">
+                    <circle
+   cx="530.85699"
+   cy="531.25403"
+   r="369.14301"
+   style="fill:none;stroke:#bdba59;stroke-width:72.67px"
+   id="circle5" />
+                </g>
+                <g
+   transform="matrix(0.265935,0,0,0.264756,699.073,68.8175)"
+   filter="url(#edge-glow)"
+   id="g7">
+                    <path
+   d="m 530.429,465 v 270 m -260.8,-340.119 v 270 m 521.6,-269.762 v 270 M 529.571,465 790.371,395.119 M 269.629,394.881 530.429,325 m 0,410 260.8,-69.881 M 529.571,464.881 268.771,395 M 791.229,394.881 530.429,325 m 0,409.881 L 269.629,665"
+   style="fill:#57667f;stroke:#000000;stroke-width:57.33px"
+   id="path6" />
+                </g>
+            </g>
+            <g
+   transform="matrix(0.265935,0,0,0.264756,699.073,68.8175)"
+   filter="url(#edge-glow)"
+   id="g9">
+                <path
+   d="m 530.429,465 v 270 m -260.8,-340.119 v 270 m 521.6,-269.762 v 270 M 529.571,465 790.371,395.119 M 269.629,394.881 530.429,325 m 0,410 260.8,-69.881 M 529.571,464.881 268.771,395 M 791.229,394.881 530.429,325 m 0,409.881 L 269.629,665"
+   style="fill:#57667f;stroke:#000000;stroke-width:57.33px"
+   id="path8" />
+            </g>
+        </g>
+    </g>
+</svg>
