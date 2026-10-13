@@ -35,7 +35,7 @@ Run these checks **before** any externally-visible action. Any mismatch → halt
 
 ```bash
 # Workspace root
-cd ~/w/hatlabs/halos/halos
+cd ~/w/hatlabs/halos
 
 # 1. Fork repo structure is intact
 git -C homarr branch -a | grep path-only-app-hrefs
@@ -132,7 +132,7 @@ git -C homarr diff --stat $CUR_BASE..$UPSTREAM_NEW -- \
 ## Step 3: Rebase the production-build branch
 
 ```bash
-cd ~/w/hatlabs/halos/halos/homarr
+cd ~/w/hatlabs/halos/homarr
 
 # Pre-rebase backup tag (locally, not pushed) — lets you reset cleanly if anything goes wrong
 git tag backup/feat-path-only-app-hrefs-pre-${UPSTREAM_NEW}-rebase feat/path-only-app-hrefs
@@ -173,7 +173,7 @@ git diff backup/feat-path-only-app-hrefs-pre-${UPSTREAM_NEW}-rebase HEAD -- $PAT
 Run the path-only-href validation tests on the rebased tree (run from the **homarr repo root**, not the package dir):
 
 ```bash
-cd ~/w/hatlabs/halos/halos/homarr
+cd ~/w/hatlabs/halos/homarr
 npx vitest run packages/validation/src/test/app.spec.ts
 # Expect: 33 tests passed (or whatever the current count is — should match pre-rebase)
 ```
@@ -187,7 +187,7 @@ A workspace-level `pnpm install` against the new upstream lockfile may be requir
 This is the first externally-visible action. **Get explicit human approval before running.**
 
 ```bash
-cd ~/w/hatlabs/halos/halos/homarr
+cd ~/w/hatlabs/halos/homarr
 git push --force-with-lease hatlabs feat/path-only-app-hrefs
 ```
 
@@ -238,7 +238,7 @@ If the run failed: inspect with `gh run view $RUN_ID --repo hatlabs/homarr --log
 Use the in-place compose-swap pattern, not a full `.deb` build. Full pattern is documented in `docs/solutions/best-practices/2026-05-04-image-swap-smoke-test-without-deb-rebuild.md`. Quick version:
 
 ```bash
-cd ~/w/hatlabs/halos/halos/halos-core-containers
+cd ~/w/hatlabs/halos/halos-core-containers
 
 # Smoke-test branch off dev/homarr-fork (so any unmerged dev-only changes come along)
 git fetch origin dev/homarr-fork
@@ -304,7 +304,7 @@ ssh ${DEV_HOST} "
 Branch off **`main`** (not `dev/homarr-fork`).
 
 ```bash
-cd ~/w/hatlabs/halos/halos/halos-core-containers
+cd ~/w/hatlabs/halos/halos-core-containers
 git checkout main
 git pull --ff-only origin main
 
@@ -399,7 +399,7 @@ ssh ${DEV_HOST} "sudo docker ps --format '{{.Image}}' | grep homarr"
 After production promotion lands, fast-forward (or rebase) `dev/homarr-fork` onto `main` so the dev/test branch matches the new production base. The branch-based dev/prod split re-establishes only when the *next* fork iteration lands.
 
 ```bash
-cd ~/w/hatlabs/halos/halos/halos-core-containers
+cd ~/w/hatlabs/halos/halos-core-containers
 git fetch origin
 git checkout dev/homarr-fork
 git pull --ff-only origin dev/homarr-fork
@@ -419,7 +419,7 @@ git rebase origin/main
 The production-promotion PR is reversible by a single revert PR:
 
 ```bash
-cd ~/w/hatlabs/halos/halos/halos-core-containers
+cd ~/w/hatlabs/halos/halos-core-containers
 git checkout main
 git pull --ff-only origin main
 
