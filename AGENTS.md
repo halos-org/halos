@@ -105,7 +105,7 @@ halos/
 ├── halos-mdns-publisher/          # Advertises *.halos.local subdomains via Avahi
 ├── halos-metapackages/            # HaLOS metapackages (halos, halos-marine)
 ├── halos-ublox-config/            # u-blox GNSS receiver auto-configuration
-├── homarr/                        # Homarr (upstream clone)
+├── homarr/                        # Homarr; add the hatlabs/homarr fork as remote `hatlabs` (see docs/runbooks)
 ├── homarr-container-adapter/      # Homarr first-boot setup and container discovery
 ├── authelia/                      # Authelia (upstream clone, reference)
 ├── avnav/                         # AvNav (upstream clone, reference)
@@ -117,6 +117,10 @@ halos/
 └── shared-workflows/              # Reusable GitHub Actions workflows
 ```
 
+**Each repository has its own AGENTS.md** - read the appropriate one for detailed context.
+
+`./run clone-repos` sets only the `origin` remote; add other remotes, such as `hatlabs` on `homarr/`, by hand.
+
 Signal K webapps and plugins (Skip, KIP, the alert and history provider plugins) and the Signal K server fork are developed in a separate workspace, `hatlabs/signalk-workspace`.
 
 ## GitHub Organizations and APT Repositories
@@ -124,7 +128,7 @@ Signal K webapps and plugins (Skip, KIP, the alert and history provider plugins)
 Repositories are split across two GitHub orgs:
 
 - **`halos-org`** — Most HaLOS repos. APT packages deploy to `halos-org/apt.halos.fi`.
-- **`hatlabs`** — Hardware-specific repos (`halos-pi-gen-custom`, `halos-halpi-desktop-branding`) and `apt.hatlabs.fi`. APT packages deploy to `hatlabs/apt.hatlabs.fi`.
+- **`hatlabs`** — Hardware-specific repos (`halos-pi-gen-custom`, `halos-halpi-desktop-branding`, `halos-halpi2-desktop`, `flash-live-system`), `halos-bridge-metapackage`, upstream forks (`homarr`), and `apt.hatlabs.fi`. APT packages deploy to `hatlabs/apt.hatlabs.fi`.
 
 When configuring CI workflows, always use the correct `apt-repository` input for the shared workflows. Repos in `hatlabs` must explicitly set `apt-repository: hatlabs/apt.hatlabs.fi` (the default is `halos-org/apt.halos.fi`).
 
