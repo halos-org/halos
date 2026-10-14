@@ -1,6 +1,6 @@
 # HaLOS Workspace - Agentic Coding Hub
 
-**LAST MODIFIED**: 2026-10-13
+**LAST MODIFIED**: 2026-10-14
 
 **Document Purpose**: Central workspace for agentic coding with Claude Code and other AI assistants. This workspace provides full context across all HaLOS repositories for optimal AI-assisted development.
 
@@ -15,7 +15,6 @@
 - `docs/PROJECT_PLANNING_GUIDE.md` - Project planning process
 - `docs/HOSTNAME_POLICY.md` - Policy on hard-coded hostname references
 - `docs/solutions/` - Documented solutions to past problems (bugs, best practices, workflow patterns), with YAML frontmatter for searchability; relevant when implementing or debugging in documented areas
-- `docs/runbooks/` - Step-by-step operational procedures for recurring multi-repo workflows (e.g., rebasing the Homarr fork onto a new upstream release and promoting it to production); relevant when executing a documented procedure rather than designing a new one
 
 ## ⛔ Test Device Policy
 
@@ -105,7 +104,7 @@ halos/
 ├── halos-mdns-publisher/          # Advertises *.halos.local subdomains via Avahi
 ├── halos-metapackages/            # HaLOS metapackages (halos, halos-marine)
 ├── halos-ublox-config/            # u-blox GNSS receiver auto-configuration
-├── homarr/                        # Homarr; add the hatlabs/homarr fork as remote `hatlabs` (see docs/runbooks)
+├── homarr/                        # Homarr (upstream clone, reference)
 ├── homarr-container-adapter/      # Homarr first-boot setup and container discovery
 ├── authelia/                      # Authelia (upstream clone, reference)
 ├── avnav/                         # AvNav (upstream clone, reference)
@@ -118,8 +117,6 @@ halos/
 ```
 
 **Each repository has its own AGENTS.md** - read the appropriate one for detailed context.
-
-`./run clone-repos` sets only the `origin` remote; add other remotes, such as `hatlabs` on `homarr/`, by hand.
 
 Signal K webapps and plugins (Skip, KIP, the alert and history provider plugins) and the Signal K server fork are developed in a separate workspace, `hatlabs/signalk-workspace`.
 
